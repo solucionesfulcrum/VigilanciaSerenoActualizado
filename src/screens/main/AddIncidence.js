@@ -95,16 +95,18 @@ const AddIncidence=({navigation})=>{
     const [visible, setVisible] = useState(false);
     const [opacado, setOpacado] = useState(1);
 
+    
     const tomarFoto=()=>{
         ImagePicker.launchCamera(
             {
               mediaType: 'photo',
-              includeBase64: true,
+              //includeBase64: false,
               maxHeight: 200,
               maxWidth: 200,
             },
             (response) => {
               setResponse(response);
+              console.warn(response),
               setImagen(response.base64)
             },
           )
@@ -127,8 +129,8 @@ const AddIncidence=({navigation})=>{
             {
               mediaType: 'photo',
               includeBase64: true,
-              maxHeight: 200,
-              maxWidth: 200,
+              maxHeight: 2000,
+              maxWidth: 2000,
             },
             (response) => {
               setResponse(response);
@@ -183,18 +185,26 @@ const AddIncidence=({navigation})=>{
         setData(datastatic.filter(e=>{return e.name.indexOf(query.name)>-1}))
       },[query])  
 
-      const Enviar = () => {
-          axios.post('http://192.168.1.37:8000/api/token/',{
+      const Enviar = async () => {
+            
+        if(response!=null){
+            const archivoTotal= response;
+            const cargaFoto= new FormData();
+            cargaFoto.append('tipo_in',query)
+            cargaFoto.append('foto',{uri: archivoTotal.uri,name: archivoTotal.fileName,type: archivoTotal.type})
+            console.warn("archivo total",archivoTotal)
+            console.warn("cargarfoto", cargaFoto)
+
+          await axios.post('http://192.168.1.37:8000/api/token/',{
             "username": 'Fulcrum',
             "password": '123456'
           })
           .then(
           (res)=>{
             const auth="Bearer "+res.data.access
-            axios.post('http://192.168.1.37:8000/Incidencias/',{
-                "tipo_in": query,
-                "foto": response
-            },
+            axios.post('http://192.168.1.37:8000/Incidencias/',
+            cargaFoto
+            ,
             {              
               headers : {'Authorization': auth, 'Content-Type': 'multipart/form-data'}
             }
@@ -202,7 +212,7 @@ const AddIncidence=({navigation})=>{
             .then(
               (res)=>{
                 console.warn('exito', res)
-                navigation.navigate('MenuIncidence')
+                navigation.navigate('MenuPrincipal')
               }
             )
             .catch(
@@ -216,7 +226,10 @@ const AddIncidence=({navigation})=>{
             (response)=>{
               response===404 ? console.warn('lo sientimos no tenemos servicios') :console.warn('Error:' ,response)
             }
-          )           
+          )       
+        }else{
+            console.warn("nohayfoto")
+        }    
       }
 
     return(
