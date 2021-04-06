@@ -1,8 +1,9 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import {StyleSheet,View,Image, Text, TouchableOpacity} from 'react-native'
 import Button from '../../component/button/Button'
 import {windowWidth,windowHeight} from '../../resource/Dimensions'
 import InputText from '../../component/inputText/InputText'
+import axios from 'axios'
 
 const styles = StyleSheet.create({
     container:{
@@ -16,7 +17,11 @@ const styles = StyleSheet.create({
       fontWeight: 'bold'
     },
     subTitle:{
-      fontSize: 12,
+      fontSize: 12,     
+    },
+    subTitleError:{
+      fontSize: 12,  
+      color: 'red',  
     },
     view:{
         marginVertical: 10,
@@ -34,6 +39,55 @@ const styles = StyleSheet.create({
   });  
 
 const Login=({navigation})=>{
+    const [usuario, setUsuario] = useState();
+    const [clave, setClave] = useState();
+    const [data, setData] = useState();
+    const [error, setError] = useState(false);
+
+    useEffect(()=>{
+      axios.post('http://192.168.1.37:8000/api/token/',{
+          "username": 'Fulcrum',
+          "password": '123456'
+        })
+        .then(
+        (response)=>{
+          const auth="Bearer "+response.data.access
+          axios.get('http://192.168.1.37:8000/Usuario/',
+          {
+            headers:{'Authorization': auth}
+          }
+          )
+          .then(
+            (res)=>{
+              console.warn('exito', res.data)
+              setData(res.data)
+            }
+          )
+          .catch(
+            (res)=>{
+              console.warn('Error:', res)
+            }
+          )
+        }
+        )
+        .catch(
+          (response)=>{
+            response===404 ? console.warn('lo sientimos no tenemos servicios') :console.warn('Error:' ,response)
+          }
+        )  
+    },[clave])
+
+    const login = () => {
+      for (let x of data){
+        if ( x.usuario === usuario && x.password === clave ){
+          navigation.navigate('MenuPrincipal')
+          setError(false)
+        }else{
+          setError(true)
+        }
+      }
+    }
+
     return(
         <View style={styles.container}>
         <Image
@@ -46,12 +100,12 @@ const Login=({navigation})=>{
         </View>
         <View style={styles.view}>
         <InputText 
-        label={'EMAIL'} 
+        label={'USUARIO'} 
         windowWidth={(windowWidth/1.5)} 
         windowHeight={(windowHeight/13)} 
         numberOfLines={10} 
         numberOfLines={1} 
-        onChangeText={(e) => {setTitulo(e)}}></InputText>
+        onChangeText={(e) => {setUsuario(e)}}></InputText>
         </View>
         <View style={styles.view}>
         <InputText 
@@ -60,13 +114,14 @@ const Login=({navigation})=>{
         windowHeight={(windowHeight/13)} 
         numberOfLines={10} 
         numberOfLines={1} 
-        onChangeText={(e) => {setTitulo(e)}}></InputText>
+        onChangeText={(e) => {setClave(e)}}></InputText>
         </View>
+        {error ? <Text style={styles.subTitleError}>Usuario o contraseña incorrecta</Text> : <Text style={styles.subTitle}></Text> }
         <View style={styles.view}>
         <Text style={styles.link}>Recuperar contraseña</Text>
         </View>
         <View style={styles.view}>
-        <Button label={'LOGIN'} windowWidth={windowWidth/1.5} windowHeight={windowHeight/16}  onPress={() => navigation.navigate('MenuPrincipal')}></Button>
+        <Button label={'LOGIN'} windowWidth={windowWidth/1.5} windowHeight={windowHeight/16}  onPress={login}></Button>
         </View>
         <View style={styles.create}>
         <Text style={styles.subTitle}>¿No tiene cuenta?</Text>
