@@ -6,6 +6,7 @@ import Footer from '../../component/footer/Footer'
 import InputText from '../../component/inputText/InputText'
 import * as ImagePicker from 'react-native-image-picker'
 import Autocomplete from 'react-native-autocomplete-input'
+import axios from 'axios'
 
 
 const styles = StyleSheet.create({
@@ -162,9 +163,9 @@ const AddIncidence=({navigation})=>{
         {id:'4', name: 'DAÑO DE PROPIEDAD'},
         {id:'5', name: 'HOMICIDIO'},
         {id:'6', name: 'EXTERSION'},
-        {id:'5', name: 'RIESGO ALTO'},
-        {id:'5', name: 'SUICIDIO'},
-        {id:'5', name: 'TOQUE DE QUEDA'}]);
+        {id:'7', name: 'RIESGO ALTO'},
+        {id:'8', name: 'SUICIDIO'},
+        {id:'9', name: 'TOQUE DE QUEDA'}]);
     
         //console.warn(query)
       const datastatic = [
@@ -174,13 +175,50 @@ const AddIncidence=({navigation})=>{
         {id:'4', name: 'DAÑO DE PROPIEDAD'},
         {id:'5', name: 'HOMICIDIO'},
         {id:'6', name: 'EXTERSION'},
-        {id:'5', name: 'RIESGO ALTO'},
-        {id:'5', name: 'SUICIDIO'},
-        {id:'5', name: 'TOQUE DE QUEDA'}
+        {id:'7', name: 'RIESGO ALTO'},
+        {id:'8', name: 'SUICIDIO'},
+        {id:'9', name: 'TOQUE DE QUEDA'}
       ]  
       useEffect(()=>{
         setData(datastatic.filter(e=>{return e.name.indexOf(query.name)>-1}))
       },[query])  
+
+      const Enviar = () => {
+          axios.post('http://192.168.1.37:8000/api/token/',{
+            "username": 'Fulcrum',
+            "password": '123456'
+          })
+          .then(
+          (res)=>{
+            const auth="Bearer "+res.data.access
+            axios.post('http://192.168.1.37:8000/Incidencias/',{
+                "tipo_in": query,
+                "foto": response
+            },
+            {              
+              headers : {'Authorization': auth, 'Content-Type': 'multipart/form-data'}
+            }
+            )
+            .then(
+              (res)=>{
+                console.warn('exito', res)
+                navigation.navigate('MenuIncidence')
+              }
+            )
+            .catch(
+              (res)=>{
+                console.warn('Error:', res)
+              }
+            )
+          }
+          )
+          .catch(
+            (response)=>{
+              response===404 ? console.warn('lo sientimos no tenemos servicios') :console.warn('Error:' ,response)
+            }
+          )           
+      }
+
     return(
         <>
         <View style={styles.containerInit} opacity={opacado}>
@@ -189,13 +227,13 @@ const AddIncidence=({navigation})=>{
         <View style={styles.containerCenter1}>
         <Text style={styles.TextoForm}>Tipo de Incedencia</Text>
             <Autocomplete
-                autoCapitalize="none"
+                autoCapitalize="words"
                 autoCorrect={false}
                 hideResults={result}
                 containerStyle={styles.autocompleteContainer}
                 data={data}
                 defaultValue={query}
-                onChangeText={text => (setQuery({name: text},setResult(false)))}
+                onChangeText={text => (setQuery({name: text}),setResult(false))}
                 placeholder="Ingrese alguna Incidencia"
                 renderItem={i => (
                     <TouchableOpacity onPress={() => (setQuery(i.item.name),setResult(true))} >
@@ -247,7 +285,7 @@ const AddIncidence=({navigation})=>{
                 </View>
                 </Modal>
         </View>    
-            <Button label={'Enviar'} windowWidth={windowWidth/1.5} windowHeight={windowHeight/16} onPress={() => navigation.navigate('MenuIncidence')}></Button>
+            <Button label={'Enviar'} windowWidth={windowWidth/1.5} windowHeight={windowHeight/16} onPress={Enviar}></Button>
         </View>
         <View style={styles.containerEnd} opacity={opacado}>
             <Footer navigation={navigation}></Footer>
