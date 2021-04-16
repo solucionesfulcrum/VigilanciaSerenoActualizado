@@ -43,10 +43,11 @@ const Login=({navigation})=>{
     const [clave, setClave] = useState();
     const [data, setData] = useState();
     const [error, setError] = useState(false);
+    const [war, setWar] = useState('');
 
     useEffect(()=>{
       axios.post('http://192.168.1.37:8000/api/token/',{
-          "username": 'Fulcrum',
+          "username": 'Vigilancia',
           "password": '123456'
         })
         .then(
@@ -60,18 +61,21 @@ const Login=({navigation})=>{
           .then(
             (res)=>{
               console.warn('exito', res.data)
+              setWar(res+'then')
               setData(res.data)
             }
           )
           .catch(
             (res)=>{
               console.warn('Error:', res)
+              setWar(res+'catch1')
             }
           )
         }
         )
         .catch(
           (response)=>{
+            setWar(response+'catch2')
             response===404 ? console.warn('lo sientimos no tenemos servicios') :console.warn('Error:' ,response)
           }
         )  
@@ -90,6 +94,7 @@ const Login=({navigation})=>{
 
     return(
         <View style={styles.container}>
+        <Text>{war}</Text>  
         <Image
             style={{width: windowWidth/4.5, height: windowHeight/7}}
             source={require('../../resource/static/images/Escudo.png')}

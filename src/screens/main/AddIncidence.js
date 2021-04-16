@@ -101,11 +101,12 @@ const AddIncidence=({navigation})=>{
             {
               mediaType: 'photo',
               //includeBase64: false,
-              maxHeight: 200,
-              maxWidth: 200,
+              maxHeight: 2000,
+              maxWidth: 2000,
             },
             (response) => {
               setResponse(response);
+              setTipe(response.type)
               console.warn(response),
               setImagen(response.base64)
             },
@@ -119,6 +120,8 @@ const AddIncidence=({navigation})=>{
             },
             (response) => {
               setResponse(response);
+              setTipe('video/quicktime')
+              console.warn("video", response)
               setImagen(response.base64)
             },
           )
@@ -134,6 +137,7 @@ const AddIncidence=({navigation})=>{
             },
             (response) => {
               setResponse(response);
+              setTipe(response.type)
               setImagen(response.base64)
             },
           )
@@ -146,6 +150,7 @@ const AddIncidence=({navigation})=>{
             },
             (response) => {
               setResponse(response);
+              setTipe('video/quicktime')
               setImagen(response.base64)
             },
           )
@@ -155,7 +160,8 @@ const AddIncidence=({navigation})=>{
         setVisible(true)
         setOpacado(0.5)
     }
-
+    
+    const [tipe, setTipe]=useState("");
     const [query, setQuery] = useState("");
     const [result, setResult] = useState(true);
     const [data, setData] = useState([
@@ -191,12 +197,12 @@ const AddIncidence=({navigation})=>{
             const archivoTotal= response;
             const cargaFoto= new FormData();
             cargaFoto.append('tipo_in',query)
-            cargaFoto.append('foto',{uri: archivoTotal.uri,name: archivoTotal.fileName,type: archivoTotal.type})
+            cargaFoto.append('foto_video',{uri: archivoTotal.uri,name: archivoTotal.fileName,type: tipe})
             console.warn("archivo total",archivoTotal)
             console.warn("cargarfoto", cargaFoto)
 
           await axios.post('http://192.168.1.37:8000/api/token/',{
-            "username": 'Fulcrum',
+            "username": 'Vigilancia',
             "password": '123456'
           })
           .then(
