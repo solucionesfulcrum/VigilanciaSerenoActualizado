@@ -6,6 +6,8 @@ import CreateAccount from '../../screens/login/CreateAccount';
 import MenuPrincipal from '../../screens/main/MenuPrincipal';
 import CamaraVigilancia from '../../screens/main/CamaraVigilancia';
 import AddIncidence from '../../screens/main/AddIncidence'
+import SolApoyo from '../../screens/main/SolApoyo'
+import RegApoyo from '../../screens/main/RegApoyo'
 
 const Stack = createStackNavigator();
 
@@ -42,6 +44,16 @@ const HomeStack = () => {
       <Stack.Screen
         name="CamaraVigilancia"
         component={CamaraVigilancia}
+        options={{header: () => null}}
+      />
+      <Stack.Screen
+        name="SolApoyo"
+        component={SolApoyo}
+        options={{header: () => null}}
+      />
+      <Stack.Screen
+        name="RegApoyo"
+        component={RegApoyo}
         options={{header: () => null}}
       />
     </Stack.Navigator>

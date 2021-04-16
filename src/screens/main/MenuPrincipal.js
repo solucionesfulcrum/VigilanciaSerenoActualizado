@@ -46,16 +46,32 @@ const MenuPrincipal=({navigation})=>{
         </View>
         <View style={styles.containerCenter}>
         <View style={styles.cardMenu}>
-          <CardMenu label={"Registrar Incidencia"} windowWidth={windowWidth/2.5} windowHeight={windowHeight/10} onPress={()=>navigation.navigate('AddIncidence')}></CardMenu>
-          <CardMenu label={"Record de Incidencias"} windowWidth={windowWidth/2.5} windowHeight={windowHeight/10}></CardMenu>
+          <CardMenu label={"Registrar Incidencia"} 
+          windowWidth={windowWidth/2.5} 
+          windowHeight={windowHeight/10} 
+          onPress={()=>navigation.navigate('AddIncidence')}></CardMenu>
+          <CardMenu label={"Record de Incidencias"}
+           windowWidth={windowWidth/2.5} 
+           windowHeight={windowHeight/10}></CardMenu>
         </View>
         <View style={styles.cardMenu}>
-          <CardMenu label={"Solicitar Apoyo"} windowWidth={windowWidth/2.5} windowHeight={windowHeight/10}></CardMenu>
-          <CardMenu label={"Camaras de Vigilancia"} windowWidth={windowWidth/2.5} windowHeight={windowHeight/10} onPress={()=>navigation.navigate('CamaraVigilancia')}></CardMenu>
+          <CardMenu label={"Solicitar Apoyo"}
+           windowWidth={windowWidth/2.5} 
+           windowHeight={windowHeight/10}
+           onPress={()=>navigation.navigate('SolApoyo')}></CardMenu>
+          <CardMenu label={"Camaras de Vigilancia"} 
+          windowWidth={windowWidth/2.5} 
+          windowHeight={windowHeight/10} 
+          onPress={()=>navigation.navigate('CamaraVigilancia')}></CardMenu>
         </View>
         <View style={styles.cardMenu}>
-          <CardMenu label={"Registrar Apoyo"} windowWidth={windowWidth/2.5} windowHeight={windowHeight/10}></CardMenu>
-          <CardMenu label={"Resumen Estadistico"} windowWidth={windowWidth/2.5} windowHeight={windowHeight/10}></CardMenu>
+          <CardMenu label={"Registrar Apoyo"} 
+          windowWidth={windowWidth/2.5} 
+          windowHeight={windowHeight/10}
+          onPress={()=>navigation.navigate('RegApoyo')}></CardMenu>
+          <CardMenu label={"Resumen Estadistico"}
+          windowWidth={windowWidth/2.5} 
+          windowHeight={windowHeight/10}></CardMenu>
         </View>
       </View>
       <View style={styles.containerEnd}>
