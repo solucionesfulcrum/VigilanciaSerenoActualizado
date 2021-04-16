@@ -5,7 +5,8 @@ import Login from '../../screens/login/Login';
 import CreateAccount from '../../screens/login/CreateAccount';
 import MenuPrincipal from '../../screens/main/MenuPrincipal';
 import CamaraVigilancia from '../../screens/main/CamaraVigilancia';
-import AddIncidence from '../../screens/main/AddIncidence'
+import AddIncidence from '../../screens/main/AddIncidence';
+import ResumenEstadistico from '../../screens/main/ResumenEstradistico';
 
 const Stack = createStackNavigator();
 
@@ -42,6 +43,11 @@ const HomeStack = () => {
       <Stack.Screen
         name="CamaraVigilancia"
         component={CamaraVigilancia}
+        options={{header: () => null}}
+      />
+      <Stack.Screen
+        name="ResumenEstadistico"
+        component={ResumenEstadistico}
         options={{header: () => null}}
       />
     </Stack.Navigator>

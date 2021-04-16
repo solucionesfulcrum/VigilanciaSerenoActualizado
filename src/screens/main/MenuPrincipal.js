@@ -55,7 +55,7 @@ const MenuPrincipal=({navigation})=>{
         </View>
         <View style={styles.cardMenu}>
           <CardMenu label={"Registrar Apoyo"} windowWidth={windowWidth/2.5} windowHeight={windowHeight/10}></CardMenu>
-          <CardMenu label={"Resumen Estadistico"} windowWidth={windowWidth/2.5} windowHeight={windowHeight/10}></CardMenu>
+          <CardMenu label={"Resumen Estadistico"} windowWidth={windowWidth/2.5} windowHeight={windowHeight/10} onPress={()=>navigation.navigate('ResumenEstadistico')}></CardMenu>
         </View>
       </View>
       <View style={styles.containerEnd}>
