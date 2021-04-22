@@ -9,6 +9,10 @@ import AddIncidence from '../../screens/main/AddIncidence';
 import ResumenEstadistico from '../../screens/main/ResumenEstradistico';
 import SolApoyo from '../../screens/main/SolApoyo'
 import RegApoyo from '../../screens/main/RegApoyo'
+<<<<<<< HEAD
+=======
+import DetalleIncidence from '../../screens/main/DetalleIncidence'
+>>>>>>> 00d799a06043747e28cc865ca61152b4589c762e
 
 const Stack = createStackNavigator();
 
@@ -48,11 +52,6 @@ const HomeStack = () => {
         options={{header: () => null}}
       />
       <Stack.Screen
-        name="ResumenEstadistico"
-        component={ResumenEstadistico}
-        options={{header: () => null}}
-      />
-      <Stack.Screen
         name="SolApoyo"
         component={SolApoyo}
         options={{header: () => null}}
@@ -60,6 +59,16 @@ const HomeStack = () => {
       <Stack.Screen
         name="RegApoyo"
         component={RegApoyo}
+        options={{header: () => null}}
+      />
+      <Stack.Screen
+        name="ResumenEstadistico"
+        component={ResumenEstadistico}
+        options={{header: () => null}}
+      />
+      <Stack.Screen
+        name="DetalleIncidence"
+        component={DetalleIncidence}
         options={{header: () => null}}
       />
     </Stack.Navigator>

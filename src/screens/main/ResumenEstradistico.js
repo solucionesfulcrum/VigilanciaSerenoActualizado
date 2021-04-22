@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     containerCenter1:{
-        flex: 0.53,
+        flex: 0.46,
         alignItems: 'center',
         marginTop: windowWidth/15,
     },
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
         marginLeft: 35,
         marginTop: 10,
         marginBottom: -40,
-        flex: 0.05
+        flex: 0.1
     },
     fotoVideo:{
         flexDirection: 'column'
@@ -99,7 +99,8 @@ const styles = StyleSheet.create({
         fontSize: 12,
     },
     subtitle:{
-        marginRight: 18
+        marginRight: 18,
+        width: windowWidth/5.5
     }
 });  
 
@@ -132,9 +133,9 @@ const ResumenEstadistico = ({navigation}) =>{
     </View>
     <View style={styles.containerTitle}>
         <Text style={styles.subtitle}>Nombre</Text>
-        <Text style={styles.subtitle}>T. Registro</Text>
-        <Text style={styles.subtitle}>T. Atencion</Text>
-        <Text style={styles.subtitle}>Satisfaccion</Text>
+        <Text style={styles.subtitle}>T. Reacción</Text>
+        <Text style={styles.subtitle}>I. Atendidas</Text>
+        <Text style={styles.subtitle}>Nivel Seguridad</Text>
     </View>
     <View style={styles.containerCenter1}>
     <FlatList
@@ -147,23 +148,23 @@ const ResumenEstadistico = ({navigation}) =>{
         decelerationRate="fast"
         renderItem={(item) => {
         return (
-            <ResumenSlider item = {item.item} onPress = {() => {}} />                  
+            <ResumenSlider item = {item.item}  onPress={()=>navigation.navigate('DetalleIncidence', item.item)} />                  
         );
         }}
     />
     </View>
     <View style={styles.containerCenter2}>
-        <View style={{flexDirection: 'row', marginTop: 20}}>
-            <Text style={{width: windowWidth/2, marginLeft: 15}}>Promedio Tiempo Registro</Text>
-            <Text style={{marginLeft: 80}}>10</Text>
+        <View style={{flexDirection: 'row', marginTop: 10}}>
+            <Text style={{width: windowWidth/2, marginLeft: 15}}>Promedio Tiempo Reaccion</Text>
+            <Text style={{marginLeft: 80}}>3 min</Text>
         </View>        
-        <View style={{flexDirection: 'row', marginTop: 20}}>
-            <Text style={{width: windowWidth/2, marginLeft: 15}}>Promedio Tiempo Atención</Text>
-            <Text style={{marginLeft: 80}}>10</Text>
+        <View style={{flexDirection: 'row', marginTop: 10}}>
+            <Text style={{width: windowWidth/2, marginLeft: 15}}>Tasa Promedio de Incidencias Atendidas</Text>
+            <Text style={{marginLeft: 80}}>6</Text>
         </View>  
-        <View style={{flexDirection: 'row', marginTop: 20}}>
-            <Text style={{width: windowWidth/2, marginLeft: 15}}>Satisfacción</Text>
-            <Text style={{marginLeft: 80}}>10</Text>
+        <View style={{flexDirection: 'row', marginTop: 10}}>
+            <Text style={{width: windowWidth/2, marginLeft: 15}}>Nivel de seguridad</Text>
+            <Text style={{marginLeft: 80}}>5</Text>
         </View>  
     </View>   
     <View style={styles.containerCenter}>

@@ -48,9 +48,9 @@ const ProductSliderItem = ({item, onPress}) => {
     
     var estrellas = [];
 
-    for (let x = 0; x < item.satisfaccion; x++){
+    /*for (let x = 0; x < item.satisfaccion; x++){
         estrellas.push(<Image style={styles.imageCalifiacion} source={require('../../resource/static/images/estrella.png')} />)
-    }
+    }*/
  
   return (
     <TouchableOpacity onPress={onPress}>   
@@ -58,7 +58,8 @@ const ProductSliderItem = ({item, onPress}) => {
             <Text style={styles.itemTitle}>{item.nombre}</Text>
             <Text style={styles.itemPrice}>{item.tRegistro}</Text>
             <Text style={styles.itemPrice}>{item.tAtencion}</Text>
-            {estrellas}
+            <Text style={styles.itemPrice}>{item.tAtencion}</Text>
+            {/*estrellas*/}
         </View>
       </TouchableOpacity>
   );
