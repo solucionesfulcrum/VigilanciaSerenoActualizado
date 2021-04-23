@@ -37,8 +37,6 @@ const styles = StyleSheet.create({
 });
 
 const RegApoyo = ({navigation, route}) => {
-  const {title, image, id, price, description, category, collections} =
-    route.params || {};
   return (
     <>
       <View style={styles.containerFirst}>
@@ -65,7 +63,7 @@ const RegApoyo = ({navigation, route}) => {
         </View>
       </View>
       <View style={styles.containerEnd}>
-      <Footer navigation={navigation}/>
+      <Footer navigation={navigation} route={route.params} />
       </View>
     </>
   );

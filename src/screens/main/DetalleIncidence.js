@@ -5,70 +5,72 @@ import InputText from '../../component/inputText/InputText'
 import Button from '../../component/button/Button'
 import {windowWidth,windowHeight} from '../../resource/Dimensions'
 
-const styles = StyleSheet.create({
-    containerInit:{
-        flex: 0.08,
-        backgroundColor: '#2ec28a',
-        borderBottomLeftRadius: 25,
-        borderBottomRightRadius: 25,
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'row'
-    },
-    titulo:{
-        fontSize: 20,
-        color: '#ffffff',
-        fontWeight: 'bold',
-    },
-    containerEnd:{
-        flex: 0.10
-    },
-    containerCenter:{
-        flex: 0.82,
-        flexDirection: 'row'
-    },
-    textoDetalle:{
-        fontSize: 15,
-        marginHorizontal: 2,
-        marginVertical: 10
-    },
-    textoTituloDetalle:{
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginHorizontal: 2
-    },
-    textoLinkIV:{
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginHorizontal: 2,
-        color: 'blue',
-        marginVertical: 2,
-        marginHorizontal: 4
-    },
-    centerColum:{
-        flex: 0.5,
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderWidth: 2,
-        borderRadius: 10,
-        marginHorizontal: 2,
-        marginVertical: 5
-    },
-    borderLink:{
-        borderWidth: 2,
-        borderRadius: 10,
-    },
-    textoEstado:{
-        fontSize: 25,
-        marginHorizontal: 2,
-        marginVertical: 10,
-        color: 'green',
-        fontWeight: 'bold'
-    }
-});
+
 
 const DetalleIncidence = ({navigation, route}) => {
-    console.warn(route.params)
+
+    console.log("Detalle incidencia",route.params)
+    const styles = StyleSheet.create({
+        containerInit:{
+            flex: 0.08,
+            backgroundColor: '#2ec28a',
+            borderBottomLeftRadius: 25,
+            borderBottomRightRadius: 25,
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'row'
+        },
+        titulo:{
+            fontSize: 20,
+            color: '#ffffff',
+            fontWeight: 'bold',
+        },
+        containerEnd:{
+            flex: 0.10
+        },
+        containerCenter:{
+            flex: 0.82,
+            flexDirection: 'row'
+        },
+        textoDetalle:{
+            fontSize: 15,
+            marginHorizontal: 2,
+            marginVertical: 10
+        },
+        textoTituloDetalle:{
+            fontSize: 20,
+            fontWeight: 'bold',
+            marginHorizontal: 2
+        },
+        textoLinkIV:{
+            fontSize: 20,
+            fontWeight: 'bold',
+            marginHorizontal: 2,
+            color: 'blue',
+            marginVertical: 2,
+            marginHorizontal: 4
+        },
+        centerColum:{
+            flex: 0.5,
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderWidth: 2,
+            borderRadius: 10,
+            marginHorizontal: 2,
+            marginVertical: 5
+        },
+        borderLink:{
+            borderWidth: 2,
+            borderRadius: 10,
+        },
+        textoEstado:{
+            fontSize: 25,
+            marginHorizontal: 2,
+            marginVertical: 10,
+            color: route.params.estado == 1?'green':'red',
+            fontWeight: 'bold'
+        }
+    });
     return(
     <>
         <View style={styles.containerInit}>
@@ -77,15 +79,15 @@ const DetalleIncidence = ({navigation, route}) => {
         <View style={styles.containerCenter}>
             <View style={styles.centerColum}>
                 <Text style={styles.textoTituloDetalle}>Tipo de Incidencia / Otros</Text>
-                <Text style={styles.textoDetalle}>Hurto Agrabado</Text>
-                <Text style={styles.textoTituloDetalle}>Hora / Fecha</Text>
-                <Text style={styles.textoDetalle}>11.30 AM</Text>
+                <Text style={styles.textoDetalle}>{route.params.tipo_in}</Text>
+                <Text style={styles.textoTituloDetalle}>Fecha / Hora</Text>
+                <Text style={styles.textoDetalle}>{route.params.reg.split('.')[0]}</Text>
                 <Text style={styles.textoTituloDetalle}>Nombres y Apellidos</Text>
-                <Text style={styles.textoDetalle}>{route.params.nombre}{' '}{'Casas Norberto'}</Text>
+                <Text style={styles.textoDetalle}>{route.params.datosUsuarios.nombres}</Text>
                 <Text style={styles.textoTituloDetalle}>Telefono</Text>
-                <Text style={styles.textoDetalle}>982508182</Text>
+                <Text style={styles.textoDetalle}>{route.params.datosUsuarios.phone}</Text>
                 <Text style={styles.textoTituloDetalle}>Correo</Text>
-                <Text style={styles.textoDetalle}>{route.params.nombre.split(' ')}{'@gmail.com'}</Text>
+                <Text style={styles.textoDetalle}>{route.params.datosUsuarios.email}</Text>
             </View>
             <View style={styles.centerColum}>
                 <Text style={styles.textoTituloDetalle}>Foto</Text>
@@ -93,13 +95,13 @@ const DetalleIncidence = ({navigation, route}) => {
                     <Text style={styles.textoLinkIV}>Ver Foto o Video</Text>
                 </TouchableOpacity>
                 <Text style={styles.textoTituloDetalle}>Estado:</Text>
-                <Text style={styles.textoEstado}>Atendido</Text>
+                <Text style={styles.textoEstado}>{route.params.estado == 1?'Atendido':'No Atendido'}</Text>
                 <Text style={styles.textoTituloDetalle}>Nombre Sereno</Text>
-                <Text style={styles.textoDetalle}>Jorge Compañia Silva</Text>
+                <Text style={styles.textoDetalle}>{route.params.datosUsuarios.nombres}</Text>
             </View>
         </View>
         <View style={styles.containerEnd}>
-            <Footer navigation={navigation}></Footer>
+            <Footer navigation={navigation} route={route.params}></Footer>
         </View>
     </>
     )

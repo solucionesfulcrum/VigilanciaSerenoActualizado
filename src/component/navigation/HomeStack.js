@@ -9,10 +9,7 @@ import AddIncidence from '../../screens/main/AddIncidence';
 import ResumenEstadistico from '../../screens/main/ResumenEstradistico';
 import SolApoyo from '../../screens/main/SolApoyo'
 import RegApoyo from '../../screens/main/RegApoyo'
-<<<<<<< HEAD
-=======
 import DetalleIncidence from '../../screens/main/DetalleIncidence'
->>>>>>> 00d799a06043747e28cc865ca61152b4589c762e
 
 const Stack = createStackNavigator();
 

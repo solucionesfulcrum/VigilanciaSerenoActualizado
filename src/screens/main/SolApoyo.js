@@ -26,8 +26,6 @@ const styles = StyleSheet.create({
 });
 
 const SolApoyo = ({navigation, route}) => {
-  const {title, image, id, price, description, category, collections} =
-    route.params || {};
   return (
     <>
       <SafeAreaView style={styles.containerSafeArea}>
@@ -59,7 +57,7 @@ const SolApoyo = ({navigation, route}) => {
         <Button label={'ENVIAR'} windowWidth={windowWidth/1.5} windowHeight={windowHeight/18}></Button>
         </View>
       </View>
-      <Footer navigation={navigation}/>
+      <Footer navigation={navigation} route={route.params} />
     </>
   );
 };

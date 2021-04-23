@@ -17,7 +17,7 @@ import { windowHeight, windowWidth } from '../../resource/Dimensions';
 import {InputAutoSuggest} from 'react-native-autocomplete-search';
 import Autocomplete from 'react-native-autocomplete-input';
 
-const CamaraVigilancia = ({navigation}) => {
+const CamaraVigilancia = ({navigation, route}) => {
   const youtubePlayerRef = useRef();
   const singleVideoId = 'ViMSb1HXoiY';
   const listVideoIds = [
@@ -200,7 +200,7 @@ const CamaraVigilancia = ({navigation}) => {
           {error ? 'Error: ' + error : ''}
         </Text>
       </ScrollView>
-      <Footer navigation={navigation}></Footer>
+      <Footer navigation={navigation} route={route.params}></Footer>
     </SafeAreaView>
   );
 };

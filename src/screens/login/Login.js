@@ -82,9 +82,10 @@ const Login=({navigation})=>{
     },[clave])
 
     const login = () => {
-      for (let x of data){
-        if ( x.usuario === usuario && x.password === clave ){
-          navigation.navigate('MenuPrincipal')
+      for (let x in data){
+        
+        if ( data[x].usuario === usuario && data[x].password === clave ){
+          navigation.navigate('MenuPrincipal', data[x])
           setError(false)
         }else{
           setError(true)
@@ -121,7 +122,7 @@ const Login=({navigation})=>{
         numberOfLines={1} 
         onChangeText={(e) => {setClave(e)}}></InputText>
         </View>
-        {error ? <Text style={styles.subTitleError}>Usuario o contraseña incorrecta</Text> : <Text style={styles.subTitle}></Text> }
+        {error != false ? <Text style={styles.subTitleError}>Usuario o contraseña incorrecta</Text> : <Text style={styles.subTitle}></Text> }
         <View style={styles.view}>
         <Text style={styles.link}>Recuperar contraseña</Text>
         </View>
