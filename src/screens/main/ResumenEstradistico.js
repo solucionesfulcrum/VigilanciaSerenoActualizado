@@ -114,23 +114,7 @@ const styles = StyleSheet.create({
 const ResumenEstadistico = ({navigation, route}) =>{
 
     const Enviar = () =>{ navigation.navigate('MenuPrincipal', route.params) }
-    const Data = [
-        {id: 1, nombre: 'Juan Perez', tRegistro: 2, tAtencion: 5, satisfaccion: 4},
-        {id: 2, nombre: 'Luis Sanchez', tRegistro: 3, tAtencion: 8, satisfaccion: 3},
-        {id: 3, nombre: 'Luciana Leon', tRegistro: 3, tAtencion: 4, satisfaccion: 5},
-        {id: 4, nombre: 'Juan Perez', tRegistro: 2, tAtencion: 5, satisfaccion: 4},
-        {id: 5, nombre: 'Luis Sanchez', tRegistro: 3, tAtencion: 8, satisfaccion: 3},
-        {id: 6, nombre: 'Luciana Leon', tRegistro: 3, tAtencion: 4, satisfaccion: 5},
-        {id: 7, nombre: 'Juan Perez', tRegistro: 2, tAtencion: 5, satisfaccion: 4},
-        {id: 8, nombre: 'Luis Sanchez', tRegistro: 3, tAtencion: 8, satisfaccion: 3},
-        {id: 9, nombre: 'Luciana Leon', tRegistro: 3, tAtencion: 4, satisfaccion: 5},
-        {id: 10, nombre: 'Juan Perez', tRegistro: 2, tAtencion: 5, satisfaccion: 4},
-        {id: 11, nombre: 'Luis Sanchez', tRegistro: 3, tAtencion: 8, satisfaccion: 3},
-        {id: 12, nombre: 'Luciana Leon', tRegistro: 3, tAtencion: 4, satisfaccion: 5},
-        {id: 13, nombre: 'Juan Perez', tRegistro: 2, tAtencion: 5, satisfaccion: 4},
-        {id: 14, nombre: 'Luis Sanchez', tRegistro: 3, tAtencion: 8, satisfaccion: 3},
-        {id: 15, nombre: 'Luciana Leon', tRegistro: 3, tAtencion: 4, satisfaccion: 5}
-    ]
+    
     const [data, setData] = useState(null)
     const [countTR, setCountTR]=useState(0)
     const [countIA, setCountIA]=useState(0) 

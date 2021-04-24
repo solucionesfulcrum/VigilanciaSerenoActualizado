@@ -10,6 +10,24 @@ import {windowWidth,windowHeight} from '../../resource/Dimensions'
 const DetalleIncidence = ({navigation, route}) => {
 
     console.log("Detalle incidencia",route.params)
+
+    let EstadoLabel
+    let EstadoColor
+
+    if (route.params[0].estado==1){
+      EstadoLabel= "Atendido"
+      EstadoColor= "#2ec28a"
+    }else if(route.params[0].estado==0){
+      EstadoLabel= "pendiente"
+      EstadoColor= "#A7541D"
+    }else if(route.params[0].estado==2){
+      EstadoLabel= "Espera"
+      EstadoColor= "#D9D23B"
+    }else if(route.params[0].estado==3){
+      EstadoLabel= "Falsa"
+      EstadoColor= "#DD3950"
+    }
+
     const styles = StyleSheet.create({
         containerInit:{
             flex: 0.08,
@@ -67,7 +85,7 @@ const DetalleIncidence = ({navigation, route}) => {
             fontSize: 25,
             marginHorizontal: 2,
             marginVertical: 10,
-            color: route.params.estado == 1?'green':'red',
+            color: EstadoColor,
             fontWeight: 'bold'
         }
     });
@@ -95,7 +113,7 @@ const DetalleIncidence = ({navigation, route}) => {
                     <Text style={styles.textoLinkIV}>Ver Foto o Video</Text>
                 </TouchableOpacity>
                 <Text style={styles.textoTituloDetalle}>Estado:</Text>
-                <Text style={styles.textoEstado}>{route.params[0].estado == 1?'Atendido':'No Atendido'}</Text>
+                <Text style={styles.textoEstado}>{EstadoLabel}</Text>
                 <Text style={styles.textoTituloDetalle}>Nombre Sereno</Text>
                 <Text style={styles.textoDetalle}>{route.params[0].datosUsuarios.nombres}</Text>
             </View>
