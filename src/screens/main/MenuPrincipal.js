@@ -53,7 +53,8 @@ const MenuPrincipal=({navigation, route})=>{
           onPress={()=>navigation.navigate('AddIncidence', route.params)}></CardMenu>
           <CardMenu label={"Record de Incidencias"}
            windowWidth={windowWidth/2.5} 
-           windowHeight={windowHeight/10}></CardMenu>
+           windowHeight={windowHeight/10}
+           onPress={()=>navigation.navigate('RecordIncidencia', route.params)}></CardMenu>
         </View>
         <View style={styles.cardMenu}>
           <CardMenu label={"Solicitar Apoyo"}

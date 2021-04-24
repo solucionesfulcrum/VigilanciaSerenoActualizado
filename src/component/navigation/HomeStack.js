@@ -10,6 +10,7 @@ import ResumenEstadistico from '../../screens/main/ResumenEstradistico';
 import SolApoyo from '../../screens/main/SolApoyo'
 import RegApoyo from '../../screens/main/RegApoyo'
 import DetalleIncidence from '../../screens/main/DetalleIncidence'
+import RecordIncidencia from '../../screens/main/RecordIncidencia'
 
 const Stack = createStackNavigator();
 
@@ -66,6 +67,11 @@ const HomeStack = () => {
       <Stack.Screen
         name="DetalleIncidence"
         component={DetalleIncidence}
+        options={{header: () => null}}
+      />
+      <Stack.Screen
+        name="RecordIncidencia"
+        component={RecordIncidencia}
         options={{header: () => null}}
       />
     </Stack.Navigator>

@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     containerCenter1:{
-        flex: 0.46,
+        flex: 0.63,
         alignItems: 'center',
         marginTop: windowWidth/15,
     },
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     }
 });  
 
-const ResumenEstadistico = ({navigation, route}) =>{
+const RecorIncidencia = ({navigation, route}) =>{
 
     const Enviar = () =>{ navigation.navigate('MenuPrincipal', route.params) }
     const Data = [
@@ -222,21 +222,7 @@ const ResumenEstadistico = ({navigation, route}) =>{
         );
         }}
     />
-    </View>
-    <View style={styles.containerCenter2}>
-        <View style={{flexDirection: 'row', marginTop: 10}}>
-            <Text style={{width: windowWidth/2, marginLeft: 15}}>Promedio Tiempo Reaccion</Text>
-            <Text style={{marginLeft: 40}}>{countTR} min</Text>
-        </View>        
-        <View style={{flexDirection: 'row', marginTop: 10}}>
-            <Text style={{width: windowWidth/2, marginLeft: 15}}>Tasa Promedio de Incidencias Atendidas</Text>
-            <Text style={{marginLeft: 40}}>{countIA}%</Text>
-        </View>  
-        <View style={{flexDirection: 'row', marginTop: 10}}>
-            <Text style={{width: windowWidth/2, marginLeft: 15}}>Satisfacción</Text>
-            <Text style={{marginLeft: 40}}>{countSeg}</Text>
-        </View>  
-    </View>   
+    </View>    
     <View style={styles.containerCenter}>
         <Button label={'Salir'} windowWidth={windowWidth/1.5} windowHeight={windowHeight/16} onPress={Enviar}></Button>
     </View>
@@ -247,4 +233,4 @@ const ResumenEstadistico = ({navigation, route}) =>{
     )    
 }
 
-export default ResumenEstadistico;
+export default RecorIncidencia;
