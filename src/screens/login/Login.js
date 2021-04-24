@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
   });  
 
 const Login=({navigation})=>{
+  
     const [usuario, setUsuario] = useState();
     const [clave, setClave] = useState();
     const [data, setData] = useState();
