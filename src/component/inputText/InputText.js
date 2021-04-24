@@ -18,7 +18,7 @@ const InputText = ({label,windowWidth,windowHeight,numberOfLines,onChangeText,ke
         },
       });  
   return (
-    <TextInput keyboardType={keyboardType} placeholder={label} style={styles.border} numberOfLines={numberOfLines} onChangeText={onChangeText}></TextInput> 
+    <TextInput keyboardType={keyboardType} placeholder={label} style={styles.border} numberOfLines={numberOfLines} multiline={true} onChangeText={onChangeText}></TextInput> 
   )
 };
 

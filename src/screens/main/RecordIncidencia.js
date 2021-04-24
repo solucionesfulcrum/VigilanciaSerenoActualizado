@@ -1,11 +1,12 @@
 import React, {useState,useEffect} from 'react'
-import {StyleSheet, View, Image, Text, Animated, TouchableOpacity, Modal, FlatList} from 'react-native'
+import {StyleSheet, View, Image, Text, Animated, TouchableOpacity,scrollX, Modal, FlatList} from 'react-native'
 import {windowWidth,windowHeight} from '../../resource/Dimensions'
 import Button from '../../component/button/Button'
 import Footer from '../../component/footer/Footer'
 import ResumenSlider from '../../component/tabla/ResumenSlider'
 import { color, cos } from 'react-native-reanimated'
 import axios from 'axios'
+import CartMainLI from '../../component/cardMenu/CartMainLI'
 
 const styles = StyleSheet.create({
     containerInit:{
@@ -18,20 +19,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     containerCenter1:{
-        flex: 0.63,
+        flex: 0.7,
         alignItems: 'center',
         marginTop: windowWidth/15,
     },
-    containerCenter2:{
-        flex: 0.17,
-        width: windowWidth/1.2,
-        marginLeft: 30,
-        flexDirection: 'column',
-        backgroundColor: '#E1EAFA',
-        borderRadius: 20
-    },
     containerCenter:{
-        flex: 0.12,
+        flex: 0.1,
         alignItems: 'center',
         marginTop: windowWidth/15,
     },
@@ -102,33 +95,69 @@ const styles = StyleSheet.create({
     subtitle:{
         marginRight: 18,
         width: windowWidth/5.5
+    },
+    modal:{
+        alignItems: 'center'
     }
 });  
 
 const RecorIncidencia = ({navigation, route}) =>{
+    console.log("algo", route.params)
 
-    const Enviar = () =>{ navigation.navigate('MenuPrincipal', route.params) }
-    const Data = [
-        {id: 1, nombre: 'Juan Perez', tRegistro: 2, tAtencion: 5, satisfaccion: 4},
-        {id: 2, nombre: 'Luis Sanchez', tRegistro: 3, tAtencion: 8, satisfaccion: 3},
-        {id: 3, nombre: 'Luciana Leon', tRegistro: 3, tAtencion: 4, satisfaccion: 5},
-        {id: 4, nombre: 'Juan Perez', tRegistro: 2, tAtencion: 5, satisfaccion: 4},
-        {id: 5, nombre: 'Luis Sanchez', tRegistro: 3, tAtencion: 8, satisfaccion: 3},
-        {id: 6, nombre: 'Luciana Leon', tRegistro: 3, tAtencion: 4, satisfaccion: 5},
-        {id: 7, nombre: 'Juan Perez', tRegistro: 2, tAtencion: 5, satisfaccion: 4},
-        {id: 8, nombre: 'Luis Sanchez', tRegistro: 3, tAtencion: 8, satisfaccion: 3},
-        {id: 9, nombre: 'Luciana Leon', tRegistro: 3, tAtencion: 4, satisfaccion: 5},
-        {id: 10, nombre: 'Juan Perez', tRegistro: 2, tAtencion: 5, satisfaccion: 4},
-        {id: 11, nombre: 'Luis Sanchez', tRegistro: 3, tAtencion: 8, satisfaccion: 3},
-        {id: 12, nombre: 'Luciana Leon', tRegistro: 3, tAtencion: 4, satisfaccion: 5},
-        {id: 13, nombre: 'Juan Perez', tRegistro: 2, tAtencion: 5, satisfaccion: 4},
-        {id: 14, nombre: 'Luis Sanchez', tRegistro: 3, tAtencion: 8, satisfaccion: 3},
-        {id: 15, nombre: 'Luciana Leon', tRegistro: 3, tAtencion: 4, satisfaccion: 5}
-    ]
+    const Enviar = () =>{ 
+        navigation.navigate('MenuPrincipal', route.params) 
+    }
+    
+    const cerrar = () =>{
+        setVisible(false)
+        setOpacado(1)
+    }
+    
+
     const [data, setData] = useState(null)
-    const [countTR, setCountTR]=useState(0)
-    const [countIA, setCountIA]=useState(0) 
-    const [countSeg, setCountSeg]=useState(0)   
+    const [visible, setVisible] = useState(false)
+    const [opacado, setOpacado] = useState(1)
+    const [idIncidence, setIdIncidence] = useState(null)
+    
+    const estadoAtendido=()=>{
+        axios.post('http://192.168.1.37:8000/api/token/',{
+            "username": 'Vigilancia',
+            "password": '123456'
+          })
+          .then(
+          (res)=>{
+            const auth="Bearer "+res.data.access
+            axios.patch('http://192.168.1.37:8000/Incidencias/'+idIncidence+'/', {estado: "1"},
+            {              
+              headers : {'Authorization': auth,}
+            }
+            )
+            .then(
+              (res)=>{
+                console.log("data", res)
+              }
+            )
+            .catch(
+              (res)=>{
+                console.warn('Error:', res)
+              }
+            )
+          }
+          )
+          .catch(
+            (response)=>{
+              response===404 ? console.warn('lo sientimos no tenemos servicios') :console.warn('Error:' ,response)
+            }
+          )       
+    } 
+
+    const estadoEspera=()=>{
+        
+    } 
+
+    const estadoFalsa=()=>{
+
+    }
 
     useEffect (()=>{
         axios.post('http://192.168.1.37:8000/api/token/',{
@@ -145,26 +174,8 @@ const RecorIncidencia = ({navigation, route}) =>{
             )
             .then(
               (res)=>{
-                console.warn('resumenEstadistico', res.data)
+                console.log("data", res)
                 setData(res.data)
-                let c = 0
-                let c1 = 0 
-                let dat
-                for(dat in res.data){
-                    if(res.data[dat].estado==1){
-                        let time1 = ((res.data[dat].reg.split('-')[2]).split('T')[1]).split(':')
-                        let time2 = ((res.data[dat].reg_estado.split('-')[2]).split('T')[1]).split(':')
-                        let min 
-                        {time2[1]-time1[1] < 0 ? min = parseInt(time2[1])+60 : min = time2[1] }
-                        c = c + (parseInt((time2[0]-time1[0])*60)+parseInt(min-time1[1]))
-                        c1 = c1 + 1
-                    }
-                    
-                }
-                //console.log((c1/(parseInt(dat)+1))*100)
-                setCountTR((c/c1).toFixed(2))
-                setCountIA(((c1/(parseInt(dat)+1))*100).toFixed(2))
-                setCountSeg((c1/(parseInt(dat)+1)).toFixed(2))
               }
             )
             .catch(
@@ -181,53 +192,72 @@ const RecorIncidencia = ({navigation, route}) =>{
           )       
     },[])
 
-
-
-
     return(
     <>
-    <View style={styles.containerInit}>
-        <Text style={styles.titulo}>Resumen Estadistico</Text>
+    <View style={styles.containerInit} opacity={opacado}>
+        <Text style={styles.titulo}>Record Incidencias</Text>
     </View>
-    <View style={styles.containerTitle}>
-        <Text style={styles.subtitle}>Nombre</Text>
-        <Text style={styles.subtitle}>T. Reacción</Text>
-        <Text style={styles.subtitle}>I. Atendida</Text>
-        <Text style={styles.subtitle}>Satisfacción</Text>
-    </View>
-    <View style={styles.containerCenter1}>
+    <View style={styles.containerCenter1} opacity={opacado}>
     <FlatList
-        data={data}
-        keyExtractor={(Data, index) => 'key' + index}
-        scrollEnabled
-        horizontal = {false}
-        snapToAlignment="center"
-        scrollEventThrottle={16}
-        decelerationRate="fast"
-        renderItem={(item) => {            
-            //fecha registro
-            let fechaAM1 = item.item.reg.split('-')
-            let fechaD1 = fechaAM1[2].split('T')
-            let tiempoHM1 = fechaD1[1].split(':')
-            //fecha cambio estado
-            let fechaAM = item.item.reg_estado.split('-')
-            let fechaD = fechaAM[2].split('T')
-            let tiempoHM = fechaD[1].split(':')
-            let minutos
-            {tiempoHM[1]-tiempoHM1[1] < 0 ? minutos = parseInt(tiempoHM[1])+60 : minutos = tiempoHM[1] }
+            data={data}
+            keyExtractor={(item, index) => 'key' + index}
+            vertical
+            scrollEnabled        
+            snapToAlignment="center"
+            scrollEventThrottle={16}
+            decelerationRate="fast"
+            showsVerticalScrollIndicator={false}
+            renderItem={(item) => {
+                //fecha registro
+                let fechaAM1 = item.item.reg.split('-')
+                let fechaD1 = fechaAM1[2].split('T')
+                let tiempoHM1 = fechaD1[1].split(':')
+                //fecha cambio estado
+                let fechaAM = item.item.reg_estado.split('-')
+                let fechaD = fechaAM[2].split('T')
+                let tiempoHM = fechaD[1].split(':')
+                let minutos
+                {tiempoHM[1]-tiempoHM1[1] < 0 ? minutos = parseInt(tiempoHM[1])+60 : minutos = tiempoHM[1] }
           
-            const tiempo = (tiempoHM[0]-tiempoHM1[0]).toString() + "h:" +(minutos-tiempoHM1[1]).toString() + "min"
-        return (
-            <ResumenSlider tiempo = {tiempo} item = {item.item}  onPress={()=>navigation.navigate('DetalleIncidence', item.item)} />                  
-        );
-        }}
-    />
+                const tiempo = (tiempoHM[0]-tiempoHM1[0]).toString() + "h:" +(minutos-tiempoHM1[1]).toString() + "min"
+
+                const selecionar = () =>{
+                    setVisible(true)
+                    setOpacado(0.5)
+                }
+                 
+                //console.log("holaaaa", item.item.url.split("/")[4])
+                return <CartMainLI onPress={()=>{setVisible(true),setOpacado(0.5),setIdIncidence(item.item.url.split("/")[4])}} tiempo={tiempo} windowWidth={windowWidth/1.2} windowHeight={windowHeight/8} item={item.item}></CartMainLI>;
+            }}
+        />
     </View>    
-    <View style={styles.containerCenter}>
+    <View style={styles.containerCenter} opacity={opacado}>
         <Button label={'Salir'} windowWidth={windowWidth/1.5} windowHeight={windowHeight/16} onPress={Enviar}></Button>
     </View>
-    <View style={styles.containerEnd}>
+    <View style={styles.containerEnd} opacity={opacado}>
         <Footer navigation={navigation} route={route.params}></Footer>
+    </View>
+    <View style={styles.modal}>
+        <Modal visible={visible} transparent={true} animationType='fade' presentationStyle='overFullScreen'>
+            <View style={{alignItems: 'center',marginTop: windowHeight/3}}>
+            <View style={{margin: 20,padding: 35, alignItems: 'center',backgroundColor: 'white',shadowColor: '#000000', shadowOpacity: 1,shadowOffset: {width:0,height:2}, shadowRadius: 10, elevation: 5}}>
+             <View style={{marginVertical: 10}}>
+             <Button label={"Atendido"} windowHeight={windowHeight/20} windowWidth={windowWidth/3} onPress={estadoAtendido}></Button>
+             </View>
+             <View style={{marginVertical: 10}}>
+             <Button label={"Espera"} windowHeight={windowHeight/20} windowWidth={windowWidth/3} onPress={estadoEspera}></Button>
+             </View>
+             <View style={{marginVertical: 10}}>
+             <Button label={"Falsa"} windowHeight={windowHeight/20} windowWidth={windowWidth/3} onPress={estadoFalsa}></Button>
+             </View>
+             <View style={{marginVertical: 10}}>
+             <TouchableOpacity style={{backgroundColor: '#18586C'}} onPress={cerrar}>
+                 <Text style={{color: '#ECF1F3',marginVertical: 10, marginHorizontal: 20}}>Cerrar</Text>
+             </TouchableOpacity>
+             </View>
+            </View>
+            </View>
+        </Modal>
     </View>
     </>
     )    
