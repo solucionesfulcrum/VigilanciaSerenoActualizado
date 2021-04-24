@@ -88,7 +88,8 @@ const styles = StyleSheet.create({
     },
 });  
 
-const AddIncidence=({navigation})=>{
+const AddIncidence=({navigation, route})=>{
+  console.log("AddIncidence",route.params)
 
     const [response, setResponse] = useState(null);
     const [imagen, setImagen] = useState('');
@@ -198,6 +199,8 @@ const AddIncidence=({navigation})=>{
             const cargaFoto= new FormData();
             cargaFoto.append('tipo_in',query)
             cargaFoto.append('foto_video',{uri: archivoTotal.uri,name: archivoTotal.fileName,type: tipe})
+            cargaFoto.append('calificacion', Math.floor(Math.random() * (5 - 0)) + 0)
+            cargaFoto.append('usuario', route.params.url)
             console.warn("archivo total",archivoTotal)
             console.warn("cargarfoto", cargaFoto)
 
@@ -307,7 +310,7 @@ const AddIncidence=({navigation})=>{
             <Button label={'Enviar'} windowWidth={windowWidth/1.5} windowHeight={windowHeight/16} onPress={Enviar}></Button>
         </View>
         <View style={styles.containerEnd} opacity={opacado}>
-            <Footer navigation={navigation}></Footer>
+            <Footer navigation={navigation} route={route.params}></Footer>
         </View>
         </>
     )

@@ -33,8 +33,9 @@ const styles = StyleSheet.create({
     fontSize: windowWidth/20
   },
   });  
+  
 
-const MenuPrincipal=({navigation})=>{
+const MenuPrincipal=({navigation, route})=>{
     return(
       <>
         <View style={styles.containerInit}>
@@ -49,7 +50,7 @@ const MenuPrincipal=({navigation})=>{
           <CardMenu label={"Registrar Incidencia"} 
           windowWidth={windowWidth/2.5} 
           windowHeight={windowHeight/10} 
-          onPress={()=>navigation.navigate('AddIncidence')}></CardMenu>
+          onPress={()=>navigation.navigate('AddIncidence', route.params)}></CardMenu>
           <CardMenu label={"Record de Incidencias"}
            windowWidth={windowWidth/2.5} 
            windowHeight={windowHeight/10}></CardMenu>
@@ -58,7 +59,7 @@ const MenuPrincipal=({navigation})=>{
           <CardMenu label={"Solicitar Apoyo"}
            windowWidth={windowWidth/2.5} 
            windowHeight={windowHeight/10}
-           onPress={()=>navigation.navigate('SolApoyo')}></CardMenu>
+           onPress={()=>navigation.navigate('SolApoyo', route.params)}></CardMenu>
           <CardMenu label={"Camaras de Vigilancia"} 
           windowWidth={windowWidth/2.5} 
           windowHeight={windowHeight/10} 
@@ -68,15 +69,15 @@ const MenuPrincipal=({navigation})=>{
           <CardMenu label={"Registrar Apoyo"} 
           windowWidth={windowWidth/2.5} 
           windowHeight={windowHeight/10}
-          onPress={()=>navigation.navigate('RegApoyo')}></CardMenu>
+          onPress={()=>navigation.navigate('RegApoyo', route.params)}></CardMenu>
           <CardMenu label={"Resumen Estadistico"} 
           windowWidth={windowWidth/2.5} 
           windowHeight={windowHeight/10} 
-          onPress={()=>navigation.navigate('ResumenEstadistico')}></CardMenu>
+          onPress={()=>navigation.navigate('ResumenEstadistico', route.params)}></CardMenu>
         </View>
       </View>
       <View style={styles.containerEnd}>
-        <Footer></Footer>
+        <Footer navigation={navigation} route={route.params}></Footer>
       </View>
     </>  
     )
