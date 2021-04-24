@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {windowWidth,windowHeight} from '../../resource/Dimensions'
 
-const ProductSliderItem = ({item, onPress, tiempo }) => {
+const ResumenSlider = ({item, onPress, tiempo }) => {
   /*
   //fecha registro
   let fechaAM1 = item.reg.split('-')
@@ -48,7 +48,7 @@ const ProductSliderItem = ({item, onPress, tiempo }) => {
       color: '#212121',
       fontSize: 13,
       fontWeight: '300',
-      marginRight: 35,
+      marginRight: 45,
       marginLeft: 20,
       alignItems: 'center',
       justifyContent: 'center',
@@ -66,9 +66,10 @@ const ProductSliderItem = ({item, onPress, tiempo }) => {
 
     //console.log("cardIncidence",item)
     var estrellas = [];
-
+    let c = 0
     for (let x = 0; x < item.satisfaccion; x++){
-        estrellas.push(<Image style={styles.imageCalifiacion} source={require('../../resource/static/images/estrella.png')} />)
+        estrellas.push(<Image key={c} style={styles.imageCalifiacion} source={require('../../resource/static/images/estrella.png')} />)
+        c = c + 1
     }
  
   return (
@@ -77,11 +78,10 @@ const ProductSliderItem = ({item, onPress, tiempo }) => {
             <Text style={styles.itemTitle}>{item.datosUsuarios.nombres}</Text>
             <Text style={styles.itemPrice}>{tiempo}</Text>
             <Text style={styles.itemPrice}>{item.estado == 0 ? 'NO':'SI '}</Text>
-            <Text style={styles.itemStar}>{item.seguridad}</Text>
             {estrellas}
         </View>
       </TouchableOpacity>
   );
 };
 
-export default ProductSliderItem;
+export default ResumenSlider;

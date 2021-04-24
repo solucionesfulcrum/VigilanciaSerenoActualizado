@@ -79,15 +79,15 @@ const DetalleIncidence = ({navigation, route}) => {
         <View style={styles.containerCenter}>
             <View style={styles.centerColum}>
                 <Text style={styles.textoTituloDetalle}>Tipo de Incidencia / Otros</Text>
-                <Text style={styles.textoDetalle}>{route.params.tipo_in}</Text>
+                <Text style={styles.textoDetalle}>{route.params[0].tipo_in}</Text>
                 <Text style={styles.textoTituloDetalle}>Fecha / Hora</Text>
-                <Text style={styles.textoDetalle}>{route.params.reg.split('.')[0]}</Text>
+                <Text style={styles.textoDetalle}>{route.params[0].reg.split('.')[0]}</Text>
                 <Text style={styles.textoTituloDetalle}>Nombres y Apellidos</Text>
-                <Text style={styles.textoDetalle}>{route.params.datosUsuarios.nombres}</Text>
+                <Text style={styles.textoDetalle}>{route.params[0].datosUsuarios.nombres}</Text>
                 <Text style={styles.textoTituloDetalle}>Telefono</Text>
-                <Text style={styles.textoDetalle}>{route.params.datosUsuarios.phone}</Text>
+                <Text style={styles.textoDetalle}>{route.params[0].datosUsuarios.phone}</Text>
                 <Text style={styles.textoTituloDetalle}>Correo</Text>
-                <Text style={styles.textoDetalle}>{route.params.datosUsuarios.email}</Text>
+                <Text style={styles.textoDetalle}>{route.params[0].datosUsuarios.email}</Text>
             </View>
             <View style={styles.centerColum}>
                 <Text style={styles.textoTituloDetalle}>Foto</Text>
@@ -95,13 +95,13 @@ const DetalleIncidence = ({navigation, route}) => {
                     <Text style={styles.textoLinkIV}>Ver Foto o Video</Text>
                 </TouchableOpacity>
                 <Text style={styles.textoTituloDetalle}>Estado:</Text>
-                <Text style={styles.textoEstado}>{route.params.estado == 1?'Atendido':'No Atendido'}</Text>
+                <Text style={styles.textoEstado}>{route.params[0].estado == 1?'Atendido':'No Atendido'}</Text>
                 <Text style={styles.textoTituloDetalle}>Nombre Sereno</Text>
-                <Text style={styles.textoDetalle}>{route.params.datosUsuarios.nombres}</Text>
+                <Text style={styles.textoDetalle}>{route.params[0].datosUsuarios.nombres}</Text>
             </View>
         </View>
         <View style={styles.containerEnd}>
-            <Footer navigation={navigation} route={route.params}></Footer>
+            <Footer navigation={navigation} route={route.params[1]}></Footer>
         </View>
     </>
     )

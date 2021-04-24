@@ -17,9 +17,16 @@ const InputText = ({label,windowWidth,windowHeight,numberOfLines,onChangeText,ke
           alignItems: 'center',
         },
       });  
-  return (
-    <TextInput keyboardType={keyboardType} placeholder={label} style={styles.border} numberOfLines={numberOfLines} multiline={true} onChangeText={onChangeText}></TextInput> 
-  )
+      if (label == 'CONTRASEÑA'){
+        return (
+        <TextInput keyboardType={keyboardType} placeholder={label} style={styles.border} numberOfLines={numberOfLines} onChangeText={onChangeText} secureTextEntry={true}></TextInput> 
+      )
+      }else{
+        return (
+          <TextInput keyboardType={keyboardType} placeholder={label} style={styles.border} numberOfLines={numberOfLines} multiline={true} onChangeText={onChangeText} ></TextInput> 
+        )
+      }
+  
 };
 
 

@@ -100,8 +100,14 @@ const styles = StyleSheet.create({
         fontSize: 12,
     },
     subtitle:{
+        marginLeft: -7,
         marginRight: 18,
-        width: windowWidth/5.5
+        width: windowWidth/5
+    },
+    subtitle1:{
+        marginLeft: -7,
+        marginRight: 18,
+        width: windowWidth/4
     }
 });  
 
@@ -145,7 +151,7 @@ const ResumenEstadistico = ({navigation, route}) =>{
             )
             .then(
               (res)=>{
-                console.warn('resumenEstadistico', res.data)
+                //console.warn('resumenEstadistico', res.data)
                 setData(res.data)
                 let c = 0
                 let c1 = 0 
@@ -182,7 +188,7 @@ const ResumenEstadistico = ({navigation, route}) =>{
     },[])
 
 
-
+    //console.warn('resumenEstadistico', route.params)
 
     return(
     <>
@@ -193,7 +199,7 @@ const ResumenEstadistico = ({navigation, route}) =>{
         <Text style={styles.subtitle}>Nombre</Text>
         <Text style={styles.subtitle}>T. Reacción</Text>
         <Text style={styles.subtitle}>I. Atendida</Text>
-        <Text style={styles.subtitle}>Satisfacción</Text>
+        <Text style={styles.subtitle1}>Satisfacción</Text>
     </View>
     <View style={styles.containerCenter1}>
     <FlatList
@@ -204,7 +210,7 @@ const ResumenEstadistico = ({navigation, route}) =>{
         snapToAlignment="center"
         scrollEventThrottle={16}
         decelerationRate="fast"
-        renderItem={(item) => {            
+        renderItem={(item, index) => {            
             //fecha registro
             let fechaAM1 = item.item.reg.split('-')
             let fechaD1 = fechaAM1[2].split('T')
@@ -218,7 +224,7 @@ const ResumenEstadistico = ({navigation, route}) =>{
           
             const tiempo = (tiempoHM[0]-tiempoHM1[0]).toString() + "h:" +(minutos-tiempoHM1[1]).toString() + "min"
         return (
-            <ResumenSlider tiempo = {tiempo} item = {item.item}  onPress={()=>navigation.navigate('DetalleIncidence', item.item)} />                  
+            <ResumenSlider tiempo = {tiempo} item = {item.item}  onPress={()=>navigation.navigate('DetalleIncidence', [item.item, route.params])} />                  
         );
         }}
     />
@@ -233,7 +239,7 @@ const ResumenEstadistico = ({navigation, route}) =>{
             <Text style={{marginLeft: 40}}>{countIA}%</Text>
         </View>  
         <View style={{flexDirection: 'row', marginTop: 10}}>
-            <Text style={{width: windowWidth/2, marginLeft: 15}}>Satisfacción</Text>
+            <Text style={{width: windowWidth/2, marginLeft: 15}}>Nivel de Seguridad</Text>
             <Text style={{marginLeft: 40}}>{countSeg}</Text>
         </View>  
     </View>   

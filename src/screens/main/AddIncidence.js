@@ -7,6 +7,7 @@ import InputText from '../../component/inputText/InputText'
 import * as ImagePicker from 'react-native-image-picker'
 import Autocomplete from 'react-native-autocomplete-input'
 import axios from 'axios'
+import ModaMensajeExitoso from '../../component/modal/ModalMensajeExitoso'
 
 
 const styles = StyleSheet.create({
@@ -95,6 +96,7 @@ const AddIncidence=({navigation, route})=>{
     const [imagen, setImagen] = useState('');
     const [visible, setVisible] = useState(false);
     const [opacado, setOpacado] = useState(1);
+    const [visible1, setVisible1] = useState(false);
 
     
     const tomarFoto=()=>{
@@ -193,13 +195,14 @@ const AddIncidence=({navigation, route})=>{
       },[query])  
 
       const Enviar = async () => {
+
             
         if(response!=null){
             const archivoTotal= response;
             const cargaFoto= new FormData();
             cargaFoto.append('tipo_in',query)
             cargaFoto.append('foto_video',{uri: archivoTotal.uri,name: archivoTotal.fileName,type: tipe})
-            cargaFoto.append('calificacion', Math.floor(Math.random() * (5 - 0)) + 0)
+            cargaFoto.append('satisfaccion', Math.floor(Math.random() * (5 - 0)) + 0)
             cargaFoto.append('usuario', route.params.url)
             console.warn("archivo total",archivoTotal)
             console.warn("cargarfoto", cargaFoto)
@@ -221,7 +224,11 @@ const AddIncidence=({navigation, route})=>{
             .then(
               (res)=>{
                 console.warn('exito', res)
-                navigation.navigate('MenuPrincipal')
+                setOpacado(0.2)
+                setVisible1(true)
+                setTimeout(()=>{navigation.navigate('MenuPrincipal')},
+                3000)
+                
               }
             )
             .catch(
@@ -243,6 +250,7 @@ const AddIncidence=({navigation, route})=>{
 
     return(
         <>
+        <ModaMensajeExitoso visible={visible1} label='Guardado Exitoso' setVisible={setVisible1} setOpacado={setOpacado} />
         <View style={styles.containerInit} opacity={opacado}>
             <Text style={styles.titulo}>Agregar Incidencia</Text>
         </View>
