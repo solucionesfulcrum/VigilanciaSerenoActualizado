@@ -4,9 +4,10 @@ import {windowWidth,windowHeight} from '../../resource/Dimensions'
 import Button from '../../component/button/Button'
 import Footer from '../../component/footer/Footer'
 import ResumenSlider from '../../component/tabla/ResumenSlider'
-import { color, cos } from 'react-native-reanimated'
+import { color, cos, set } from 'react-native-reanimated'
 import axios from 'axios'
 import CartMainLI from '../../component/cardMenu/CartMainLI'
+import ModalMensajeExitoso from '../../component/modal/ModalMensajeExitoso'
 
 const styles = StyleSheet.create({
     containerInit:{
@@ -118,7 +119,8 @@ const RecorIncidencia = ({navigation, route}) =>{
     const [visible, setVisible] = useState(false)
     const [opacado, setOpacado] = useState(1)
     const [idIncidence, setIdIncidence] = useState(null)
-    
+    const [visibleExitoso, setVisibleExitoso] = useState(false)
+
     const estadoAtendido=()=>{
         axios.post('http://192.168.1.37:8000/api/token/',{
             "username": 'Vigilancia',
@@ -135,6 +137,10 @@ const RecorIncidencia = ({navigation, route}) =>{
             .then(
               (res)=>{
                 console.log("data", res)
+                setOpacado(0.2)
+                setVisible(false)
+                setVisibleExitoso(true)
+                setTimeout(()=>{navigation.navigate("ResumenEstadistico")},3000)
               }
             )
             .catch(
@@ -152,11 +158,75 @@ const RecorIncidencia = ({navigation, route}) =>{
     } 
 
     const estadoEspera=()=>{
-        
+        axios.post('http://192.168.1.37:8000/api/token/',{
+            "username": 'Vigilancia',
+            "password": '123456'
+          })
+          .then(
+          (res)=>{
+            const auth="Bearer "+res.data.access
+            axios.patch('http://192.168.1.37:8000/Incidencias/'+idIncidence+'/', {estado: "2"},
+            {              
+              headers : {'Authorization': auth,}
+            }
+            )
+            .then(
+              (res)=>{
+                console.log("data", res)
+                setOpacado(0.2)
+                setVisible(false)
+                setVisibleExitoso(true)
+                setTimeout(()=>{navigation.navigate("ResumenEstadistico")},3000)
+              }
+            )
+            .catch(
+              (res)=>{
+                console.warn('Error:', res)
+              }
+            )
+          }
+          )
+          .catch(
+            (response)=>{
+              response===404 ? console.warn('lo sientimos no tenemos servicios') :console.warn('Error:' ,response)
+            }
+          ) 
     } 
 
     const estadoFalsa=()=>{
-
+        axios.post('http://192.168.1.37:8000/api/token/',{
+            "username": 'Vigilancia',
+            "password": '123456'
+          })
+          .then(
+          (res)=>{
+            const auth="Bearer "+res.data.access
+            axios.patch('http://192.168.1.37:8000/Incidencias/'+idIncidence+'/', {estado: "3"},
+            {              
+              headers : {'Authorization': auth,}
+            }
+            )
+            .then(
+              (res)=>{
+                console.log("data", res)
+                setOpacado(0.2)
+                setVisible(false)
+                setVisibleExitoso(true)
+                setTimeout(()=>{navigation.navigate("ResumenEstadistico")},3000)
+              }
+            )
+            .catch(
+              (res)=>{
+                console.warn('Error:', res)
+              }
+            )
+          }
+          )
+          .catch(
+            (response)=>{
+              response===404 ? console.warn('lo sientimos no tenemos servicios') :console.warn('Error:' ,response)
+            }
+          ) 
     }
 
     useEffect (()=>{
@@ -194,6 +264,7 @@ const RecorIncidencia = ({navigation, route}) =>{
 
     return(
     <>
+    <ModalMensajeExitoso visible={visibleExitoso} label={"Cambio exitoso"} setVisible={setVisibleExitoso} setOpacado={setOpacado}></ModalMensajeExitoso>
     <View style={styles.containerInit} opacity={opacado}>
         <Text style={styles.titulo}>Record Incidencias</Text>
     </View>
