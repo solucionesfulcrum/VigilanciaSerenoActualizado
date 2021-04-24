@@ -119,7 +119,8 @@ const Login=({navigation})=>{
         label={'CONTRASEÑA'} 
         windowWidth={(windowWidth/1.5)} 
         windowHeight={(windowHeight/13)} 
-        numberOfLines={10} 
+        numberOfLines={10}
+        secureTextEntry={true} 
         numberOfLines={1} 
         onChangeText={(e) => {setClave(e)}}></InputText>
         </View>
