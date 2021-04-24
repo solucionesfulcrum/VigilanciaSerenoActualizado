@@ -19,11 +19,11 @@ import Autocomplete from 'react-native-autocomplete-input';
 
 const CamaraVigilancia = ({navigation, route}) => {
   const youtubePlayerRef = useRef();
-  const singleVideoId = 'ViMSb1HXoiY';
+  const singleVideoId = 'dNSvbCd4KAU';
   const listVideoIds = [
-    'ViMSb1HXoiY',
-    'BfmIgt_kPvM',
-    'F9LwbmIWIr0'
+    'dNSvbCd4KAU',
+    '9M-CP2mZY3w',
+    '-wO8ZrCd1H8'
   ];
   
   const [isReady, setIsReady] = useState(false);
