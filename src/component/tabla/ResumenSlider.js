@@ -94,7 +94,9 @@ const ResumenSlider = ({item, onPress, tiempo }) => {
             <Text style={styles.itemTitle}>{item.datosUsuarios.nombres}</Text>
             <Text style={styles.itemPrice}>{tiempo}</Text>
             <Text style={styles.itemPrice}>{EstadoLabel}</Text>
-            {estrellas}
+            {EstadoLabel=='Atendido'?
+            estrellas
+            :null}
         </View>
       </TouchableOpacity>
   );

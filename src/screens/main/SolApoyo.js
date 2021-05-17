@@ -6,6 +6,7 @@ import Footer from '../../component/footer/Footer';
 import InputText from '../../component/inputText/InputText'
 import Button from '../../component/button/Button'
 import {windowWidth,windowHeight} from '../../resource/Dimensions'
+import { useState } from 'react/cjs/react.development';
 
 const styles = StyleSheet.create({
   containerSafeArea: {
@@ -26,6 +27,9 @@ const styles = StyleSheet.create({
 });
 
 const SolApoyo = ({navigation, route}) => {
+
+  const [cantidad, setCantidad] = useState();
+
   return (
     <>
       <SafeAreaView style={styles.containerSafeArea}>
@@ -42,7 +46,8 @@ const SolApoyo = ({navigation, route}) => {
         windowHeight={(windowHeight/18)} 
         numberOfLines={10} 
         numberOfLines={1}
-        keyboardType={'numeric'}></InputText>
+        keyboardType={'numeric'}
+        onChangeText={(e) => {setCantidad(e)}}></InputText>
         </View>
         <View style={styles.margin}>
         <InputText 
@@ -50,11 +55,10 @@ const SolApoyo = ({navigation, route}) => {
         windowWidth={(windowWidth/1.5)} 
         windowHeight={(windowHeight/18)} 
         numberOfLines={10} 
-        numberOfLines={1}
-        keyboardType={'numeric'}></InputText>
+        numberOfLines={1}></InputText>
         </View>
         <View style={styles.margin}>
-        <Button label={'ENVIAR'} windowWidth={windowWidth/1.5} windowHeight={windowHeight/18}></Button>
+        <Button label={'ENVIAR'} windowWidth={windowWidth/1.5} windowHeight={windowHeight/18} onPress={() => navigation.navigate('RegApoyo',cantidad)}></Button>
         </View>
       </View>
       <Footer navigation={navigation} route={route.params} />

@@ -96,7 +96,6 @@ const Login=({navigation})=>{
 
     return(
         <View style={styles.container}>
-        <Text>{war}</Text>  
         <Image
             style={{width: windowWidth/4.5, height: windowHeight/7}}
             source={require('../../resource/static/images/Escudo.png')}

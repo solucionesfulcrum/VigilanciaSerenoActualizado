@@ -97,7 +97,7 @@ const AddIncidence=({navigation, route})=>{
     const [visible, setVisible] = useState(false);
     const [opacado, setOpacado] = useState(1);
     const [visible1, setVisible1] = useState(false);
-
+    const [incidence, setIncidence] = useState('black')
     
     const tomarFoto=()=>{
         ImagePicker.launchCamera(
@@ -119,7 +119,8 @@ const AddIncidence=({navigation, route})=>{
     const filmarFoto=()=>{
         ImagePicker.launchCamera(
             {
-                mediaType: 'video'
+                mediaType: 'video',
+                videoQuality: 'high'
             },
             (response) => {
               setResponse(response);
@@ -149,7 +150,8 @@ const AddIncidence=({navigation, route})=>{
     const agregarVideo=()=>{
         ImagePicker.launchImageLibrary(
             {
-                mediaType: 'video'
+                mediaType: 'video',
+                videoQuality: 'high'
             },
             (response) => {
               setResponse(response);
@@ -202,7 +204,7 @@ const AddIncidence=({navigation, route})=>{
             const cargaFoto= new FormData();
             cargaFoto.append('tipo_in',query)
             cargaFoto.append('foto_video',{uri: archivoTotal.uri,name: archivoTotal.fileName,type: tipe})
-            cargaFoto.append('satisfaccion', Math.floor(Math.random() * (5 - 0)) + 0)
+            cargaFoto.append('satisfaccion', Math.floor(Math.random() * (5 - 1)) + 1)
             cargaFoto.append('usuario', route.params.url)
             console.warn("archivo total",archivoTotal)
             console.warn("cargarfoto", cargaFoto)
@@ -274,6 +276,12 @@ const AddIncidence=({navigation, route})=>{
                 ) }
             />
         </View>
+        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+          <Text>¿otra incidencia?</Text>
+          <TouchableOpacity  style={{width: 22, height: 22, borderWidth: 1, marginLeft: 10, borderRadius: 10, backgroundColor: '#ffffff'}}>
+        
+          </TouchableOpacity>
+        </View >
         <View style={styles.containerCenter} opacity={opacado}>
             <View style={styles.otroInci}>
             <InputText 

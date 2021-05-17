@@ -90,7 +90,7 @@ const CartMainLI = ({windowWidth,windowHeight,onPress,item,tiempo}) => {
     var estrellas = [];
 
     for (let x = 0; x < item.satisfaccion; x++){
-        estrellas.push(<Image style={styles.imageCalifiacion} source={require('../../resource/static/images/estrella.png')} />)
+        estrellas.push(<Image key={x} style={styles.imageCalifiacion} source={require('../../resource/static/images/estrella.png')} />)
     } 
 
   return (

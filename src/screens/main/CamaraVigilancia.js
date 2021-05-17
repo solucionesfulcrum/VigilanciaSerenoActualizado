@@ -56,6 +56,7 @@ const CamaraVigilancia = ({navigation, route}) => {
     {id:'5', name: 'Direccion 6'},
     {id:'6', name: 'Direccion 7'}
   ]  
+  const [ver, setVer] = useState(1)
   useEffect(()=>{
     setData(datastatic.filter(e=>{return e.name.indexOf(query.name)>-1}))
   },[query])  
@@ -199,6 +200,18 @@ const CamaraVigilancia = ({navigation, route}) => {
         <Text style={styles.instructions}>
           {error ? 'Error: ' + error : ''}
         </Text>
+        <View style={styles.containerGrabar}>
+        <Text style={{fontWeight:'bold',marginBottom: 15}}>Pulse Aqui para grabar</Text>
+        {ver!=1?
+        <>
+        <TouchableOpacity style={styles.grabar} onPress={()=>{setVer(1)}}>
+        </TouchableOpacity>
+        <Text style={{fontWeight:'bold',marginBottom: 5, color: '#D13C45', fontSize: 20}}>Grabando</Text>
+        </>
+        :
+        <TouchableOpacity style={styles.grabarStop} onPress={()=>{setVer(0)}}>
+        </TouchableOpacity>}
+        </View>
       </ScrollView>
       <Footer navigation={navigation} route={route.params}></Footer>
     </SafeAreaView>
@@ -210,6 +223,21 @@ export default CamaraVigilancia;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
+  },
+  containerGrabar:{
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  grabar:{
+    backgroundColor: '#D13C45',
+    width: windowWidth/7,
+    height: windowHeight/15,
+  },
+  grabarStop:{
+    backgroundColor: '#D13C45',
+    width: windowWidth/7,
+    height: windowHeight/15,
+    borderRadius: 50
   },
   titleText: {
     fontSize: 22,

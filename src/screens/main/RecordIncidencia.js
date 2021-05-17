@@ -7,7 +7,6 @@ import ResumenSlider from '../../component/tabla/ResumenSlider'
 import { color, cos, set } from 'react-native-reanimated'
 import axios from 'axios'
 import CartMainLI from '../../component/cardMenu/CartMainLI'
-import ModalMensajeExitoso from '../../component/modal/ModalMensajeExitoso'
 
 const styles = StyleSheet.create({
     containerInit:{
@@ -118,117 +117,9 @@ const RecorIncidencia = ({navigation, route}) =>{
     const [data, setData] = useState(null)
     const [visible, setVisible] = useState(false)
     const [opacado, setOpacado] = useState(1)
-    const [idIncidence, setIdIncidence] = useState(null)
-    const [visibleExitoso, setVisibleExitoso] = useState(false)
+    
 
-    const estadoAtendido=()=>{
-        axios.post('http://192.168.1.37:8000/api/token/',{
-            "username": 'Vigilancia',
-            "password": '123456'
-          })
-          .then(
-          (res)=>{
-            const auth="Bearer "+res.data.access
-            axios.patch('http://192.168.1.37:8000/Incidencias/'+idIncidence+'/', {estado: "1"},
-            {              
-              headers : {'Authorization': auth,}
-            }
-            )
-            .then(
-              (res)=>{
-                console.log("data", res)
-                setOpacado(0.2)
-                setVisible(false)
-                setVisibleExitoso(true)
-                setTimeout(()=>{navigation.navigate("ResumenEstadistico")},3000)
-              }
-            )
-            .catch(
-              (res)=>{
-                console.warn('Error:', res)
-              }
-            )
-          }
-          )
-          .catch(
-            (response)=>{
-              response===404 ? console.warn('lo sientimos no tenemos servicios') :console.warn('Error:' ,response)
-            }
-          )       
-    } 
-
-    const estadoEspera=()=>{
-        axios.post('http://192.168.1.37:8000/api/token/',{
-            "username": 'Vigilancia',
-            "password": '123456'
-          })
-          .then(
-          (res)=>{
-            const auth="Bearer "+res.data.access
-            axios.patch('http://192.168.1.37:8000/Incidencias/'+idIncidence+'/', {estado: "2"},
-            {              
-              headers : {'Authorization': auth,}
-            }
-            )
-            .then(
-              (res)=>{
-                console.log("data", res)
-                setOpacado(0.2)
-                setVisible(false)
-                setVisibleExitoso(true)
-                setTimeout(()=>{navigation.navigate("ResumenEstadistico")},3000)
-              }
-            )
-            .catch(
-              (res)=>{
-                console.warn('Error:', res)
-              }
-            )
-          }
-          )
-          .catch(
-            (response)=>{
-              response===404 ? console.warn('lo sientimos no tenemos servicios') :console.warn('Error:' ,response)
-            }
-          ) 
-    } 
-
-    const estadoFalsa=()=>{
-        axios.post('http://192.168.1.37:8000/api/token/',{
-            "username": 'Vigilancia',
-            "password": '123456'
-          })
-          .then(
-          (res)=>{
-            const auth="Bearer "+res.data.access
-            axios.patch('http://192.168.1.37:8000/Incidencias/'+idIncidence+'/', {estado: "3"},
-            {              
-              headers : {'Authorization': auth,}
-            }
-            )
-            .then(
-              (res)=>{
-                console.log("data", res)
-                setOpacado(0.2)
-                setVisible(false)
-                setVisibleExitoso(true)
-                setTimeout(()=>{navigation.navigate("ResumenEstadistico")},3000)
-              }
-            )
-            .catch(
-              (res)=>{
-                console.warn('Error:', res)
-              }
-            )
-          }
-          )
-          .catch(
-            (response)=>{
-              response===404 ? console.warn('lo sientimos no tenemos servicios') :console.warn('Error:' ,response)
-            }
-          ) 
-    }
-
+    
     useEffect (()=>{
         axios.post('http://192.168.1.37:8000/api/token/',{
             "username": 'Vigilancia',
@@ -264,7 +155,6 @@ const RecorIncidencia = ({navigation, route}) =>{
 
     return(
     <>
-    <ModalMensajeExitoso visible={visibleExitoso} label={"Cambio exitoso"} setVisible={setVisibleExitoso} setOpacado={setOpacado}></ModalMensajeExitoso>
     <View style={styles.containerInit} opacity={opacado}>
         <Text style={styles.titulo}>Record Incidencias</Text>
     </View>
@@ -292,13 +182,14 @@ const RecorIncidencia = ({navigation, route}) =>{
           
                 const tiempo = (tiempoHM[0]-tiempoHM1[0]).toString() + "h:" +(minutos-tiempoHM1[1]).toString() + "min"
 
-                const selecionar = () =>{
+                /*const selecionar = () =>{
                     setVisible(true)
                     setOpacado(0.5)
-                }
+                }*/
                  
                 //console.log("holaaaa", item.item.url.split("/")[4])
-                return <CartMainLI onPress={()=>{setVisible(true),setOpacado(0.5),setIdIncidence(item.item.url.split("/")[4])}} tiempo={tiempo} windowWidth={windowWidth/1.2} windowHeight={windowHeight/8} item={item.item}></CartMainLI>;
+                /*return <CartMainLI onPress={()=>{setVisible(true),setOpacado(0.5),setIdIncidence(item.item.url.split("/")[4])}} tiempo={tiempo} windowWidth={windowWidth/1.2} windowHeight={windowHeight/8} item={item.item}></CartMainLI>;*/
+                return <CartMainLI onPress={()=>{navigation.navigate('DetalleIncidence', [item.item, route.params])}} tiempo={tiempo} windowWidth={windowWidth/1.2} windowHeight={windowHeight/8} item={item.item}></CartMainLI>;
             }}
         />
     </View>    
@@ -307,28 +198,6 @@ const RecorIncidencia = ({navigation, route}) =>{
     </View>
     <View style={styles.containerEnd} opacity={opacado}>
         <Footer navigation={navigation} route={route.params}></Footer>
-    </View>
-    <View style={styles.modal}>
-        <Modal visible={visible} transparent={true} animationType='fade' presentationStyle='overFullScreen'>
-            <View style={{alignItems: 'center',marginTop: windowHeight/3}}>
-            <View style={{margin: 20,padding: 35, alignItems: 'center',backgroundColor: 'white',shadowColor: '#000000', shadowOpacity: 1,shadowOffset: {width:0,height:2}, shadowRadius: 10, elevation: 5}}>
-             <View style={{marginVertical: 10}}>
-             <Button label={"Atendido"} windowHeight={windowHeight/20} windowWidth={windowWidth/3} onPress={estadoAtendido}></Button>
-             </View>
-             <View style={{marginVertical: 10}}>
-             <Button label={"Espera"} windowHeight={windowHeight/20} windowWidth={windowWidth/3} onPress={estadoEspera}></Button>
-             </View>
-             <View style={{marginVertical: 10}}>
-             <Button label={"Falsa"} windowHeight={windowHeight/20} windowWidth={windowWidth/3} onPress={estadoFalsa}></Button>
-             </View>
-             <View style={{marginVertical: 10}}>
-             <TouchableOpacity style={{backgroundColor: '#18586C'}} onPress={cerrar}>
-                 <Text style={{color: '#ECF1F3',marginVertical: 10, marginHorizontal: 20}}>Cerrar</Text>
-             </TouchableOpacity>
-             </View>
-            </View>
-            </View>
-        </Modal>
     </View>
     </>
     )    
