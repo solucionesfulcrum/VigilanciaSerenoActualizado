@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -23,11 +23,19 @@ const ResumenSlider = ({item, onPress, tiempo }) => {
   
 
   //console.log(tiempo)
+
+  let color
+  if(item.estado == 1){
+    color ='#81F78C'
+  }else{
+    color='#FA8075'
+  }
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
       height: windowHeight/20,
-      backgroundColor: item.estado == 0 ? '#FA8075':'#81F78C',
+      backgroundColor: color,
       marginBottom: 10,
       borderRadius: 10,
       alignItems: 'center',
