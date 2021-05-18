@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
 });
 
 const RegApoyo = ({navigation, route}) => {
+  console.log(route.params)
   return (
     <>
       <View style={styles.containerFirst}>
@@ -44,13 +45,12 @@ const RegApoyo = ({navigation, route}) => {
             <Text style={styles.textStyle}>Registro de Apoyo</Text>
         </View>    
             <View style={styles.marginStory}>
-                <Text>Cantidad de Serenos Notificados    </Text>
-                <InputText 
-                windowWidth={(windowWidth/4)} 
-                windowHeight={(windowHeight/22)} 
-                numberOfLines={10} 
-                numberOfLines={1}
-                keyboardType={'numeric'}></InputText>
+                {route.params != null?
+                <>
+                <Text style={{fontSize: 15}}>Cantidad de Serenos Notificados   </Text>
+                <Text style={{fontSize: 25, fontWeight: 'bold', color: 'red'}}>{route.params}</Text>
+                </>
+                :<Text>No tiene Solicitudes de apoyo</Text>}
             </View>
         
       </View>
@@ -59,7 +59,7 @@ const RegApoyo = ({navigation, route}) => {
       </SafeAreaView>
       <View style={styles.containerOption}>
         <View style={styles.margin}>
-        <Button label={'ENVIAR'} windowWidth={windowWidth/1.5} windowHeight={windowHeight/18}></Button>
+        <Button label={'Salir'} windowWidth={windowWidth/1.5} windowHeight={windowHeight/18} onPress={() => navigation.navigate('MenuPrincipal')}></Button>
         </View>
       </View>
       <View style={styles.containerEnd}>

@@ -23,19 +23,27 @@ const ResumenSlider = ({item, onPress, tiempo }) => {
   
 
   //console.log(tiempo)
+    let EstadoLabel
+    let EstadoColor
 
-  let color
-  if(item.estado == 1){
-    color ='#81F78C'
-  }else{
-    color='#FA8075'
-  }
-
+    if (item.estado==1){
+      EstadoLabel= "Atendido"
+      EstadoColor= "#2ec28a"
+    }else if(item.estado==0){
+      EstadoLabel= "pendiente"
+      EstadoColor= "#A7541D"
+    }else if(item.estado==2){
+      EstadoLabel= "Espera"
+      EstadoColor= "#D9D23B"
+    }else if(item.estado==3){
+      EstadoLabel= "Falsa"
+      EstadoColor= "#DD3950"
+    }
   const styles = StyleSheet.create({
     container: {
       flex: 1,
       height: windowHeight/20,
-      backgroundColor: color,
+      backgroundColor: EstadoColor,
       marginBottom: 10,
       borderRadius: 10,
       alignItems: 'center',
@@ -56,8 +64,8 @@ const ResumenSlider = ({item, onPress, tiempo }) => {
       color: '#212121',
       fontSize: 13,
       fontWeight: '300',
-      marginRight: 45,
-      marginLeft: 20,
+      marginRight: 40,
+      marginLeft: 5,
       alignItems: 'center',
       justifyContent: 'center',
     },
@@ -85,8 +93,10 @@ const ResumenSlider = ({item, onPress, tiempo }) => {
         <View style={styles.container}>
             <Text style={styles.itemTitle}>{item.datosUsuarios.nombres}</Text>
             <Text style={styles.itemPrice}>{tiempo}</Text>
-            <Text style={styles.itemPrice}>{item.estado == 0 ? 'NO':'SI '}</Text>
-            {estrellas}
+            <Text style={styles.itemPrice}>{EstadoLabel}</Text>
+            {EstadoLabel=='Atendido'?
+            estrellas
+            :null}
         </View>
       </TouchableOpacity>
   );
