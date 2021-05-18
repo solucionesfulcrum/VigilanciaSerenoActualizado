@@ -17,7 +17,7 @@ const Stack = createStackNavigator();
 const HomeStack = () => {
   return (
     <Stack.Navigator
-      initialRouteName="AddIncidence"
+      initialRouteName="Splash"
       >
       <Stack.Screen
         name="Splash"

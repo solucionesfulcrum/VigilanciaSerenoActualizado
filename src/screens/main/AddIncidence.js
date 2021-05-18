@@ -97,8 +97,9 @@ const AddIncidence=({navigation, route})=>{
     const [visible, setVisible] = useState(false);
     const [opacado, setOpacado] = useState(1);
     const [visible1, setVisible1] = useState(false);
-    const [incidence, setIncidence] = useState('black')
-    
+    const [incidence, setIncidence] = useState(true)
+    const [colorInci, setColorInci] = useState('#ffffff')
+
     const tomarFoto=()=>{
         ImagePicker.launchCamera(
             {
@@ -256,6 +257,7 @@ const AddIncidence=({navigation, route})=>{
         <View style={styles.containerInit} opacity={opacado}>
             <Text style={styles.titulo}>Agregar Incidencia</Text>
         </View>
+        {incidence!=false?
         <View style={styles.containerCenter1}>
         <Text style={styles.TextoForm}>Tipo de Incedencia</Text>
             <Autocomplete
@@ -276,22 +278,26 @@ const AddIncidence=({navigation, route})=>{
                 ) }
             />
         </View>
-        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-          <Text>¿otra incidencia?</Text>
-          <TouchableOpacity  style={{width: 22, height: 22, borderWidth: 1, marginLeft: 10, borderRadius: 10, backgroundColor: '#ffffff'}}>
-        
-          </TouchableOpacity>
-        </View >
+        :null}
         <View style={styles.containerCenter} opacity={opacado}>
+            {incidence!=true?
             <View style={styles.otroInci}>
             <InputText 
                 label={'Coloque otro tipo de incidente'} 
                 windowWidth={(windowWidth/1.5)} 
                 windowHeight={(windowHeight/18)} 
                 numberOfLines={1} 
-                onChangeText={(e) => {(e)}}>
+                onChangeText={(e) => {setQuery(e),console.warn(e)}}>
             </InputText>
+         
             </View>
+            :null}
+            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+            <Text>¿otra incidencia?</Text>
+            <TouchableOpacity onPress={()=>{setIncidence(!incidence),setColorInci('#2ec28a')}} style={{width: 22, height: 22, borderWidth: 1, marginLeft: 10, borderRadius: 10, backgroundColor: incidence!=true?colorInci:'#ffffff'}}>
+            
+            </TouchableOpacity>
+        </View >
         <View style={styles.fotoVideo}>
                 <Text style={styles.TextoForm}>Foto/Video</Text>
                 <TouchableOpacity style={styles.agregarFotoVideo} onPress={()=>{lista()}}>
