@@ -85,7 +85,7 @@ const Login=({navigation})=>{
     const login = () => {
       for (let x in data){
         
-        if ( data[x].usuario === usuario && data[x].password === clave ){
+        if ( data[x].usuario === usuario && data[x].password === clave && data[x].tipo_user === "Sereno"){
           navigation.navigate('MenuPrincipal', data[x])
           setError(false)
         }else{

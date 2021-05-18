@@ -56,7 +56,8 @@ const CreateAccount=({navigation})=>{
             "email": email,
             "phone": phone,
             "usuario": email,
-            "password": clave
+            "password": clave,
+            "tipo_user": "Sereno"
           },
           {
             headers:{'Authorization': auth}
